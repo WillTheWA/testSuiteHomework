@@ -1,0 +1,72 @@
+William Morton
+CS 362
+Homework #4
+
+1. Yes, my strategy was very different for both. For the coverage suite, my focus
+	was on developing test cases that would simply fulfill the requirements for
+	all the lines. For the mutation test suite, I was focused on determining if
+	specific mutations were able to be killed which required thinking about the
+	tests in more depth. 
+
+2. No, my coverage-adequate test suite did not kill all the detectable mutants.
+	This was because some of the mutations required carefully crafted examples
+	that were not needed for simple line and branch coverage. They did appear
+	to cover all of mutants. This is likely due to the line and branch coverage
+	being at 100%.
+
+3. Sometimes mutants cannot be detected and killed because they do not 
+	fundamentally alter the program, they are in unreachable code, or they
+	are just not observable in the final output of the program and therefore
+	are not properly caught.
+	
+4. I believe I was able to detect all 150 mutants, however I was unable to kill
+	all of them with test cases. Given the wording of this question I will
+	assume it is referring to remaining living mutations instead of detecting.
+	Live mutations:
+		11: Unable to find a set of numbers that resulted in 
+		(a <= 0 != b <= 0 || c <= 0) acting differently while giving a 
+		different result than INVALID.
+		
+		59: Unable to test trian <= 0. No way to get trian negative. 
+		Otherwise trian = 0, resulted in equivalent execution.
+		
+		76: Unable to generate test case that resulted in a not INVALID
+		result given the mutation.
+		
+		80: Unable to generate test case that resulted in a non-INVALID 
+		result with the modulo operator.
+		
+		87: Unable to generate test case that resulted in a non-INVALID
+		result while using distinct numbers.
+		
+		101: Couldn't catch trian <= 0 late in the program. Trian cannot
+		be negative and trian == 0 was caught earlier in the program.
+		
+		111: Unable to generate a test case catch this mutation. 
+		Unable to evaluate (trian == 1 == a + b > c) in java.
+		
+		128: Unable to generate a test case catch this mutation. 
+		Unable to evaluate (trian == 2 == a + c > b) in java.
+		
+		136: Unable to generate test case to catch this mutation. Trian 
+		> 3 was caught earlier and trian == 3 performs equivalent 
+		execution.
+		
+		145: Unable to generate a test case catch this mutation. 
+		Unable to evaluate (trian == 3 == b + c > a) in java.
+
+5. When commenting out all of the assertions, I discovered that line and branch 
+	coverage remained the same while, mutant detection and killing rates
+	decreased significantly. This is because each line and branch are still
+	executed, there is just no error thrown to catch the mutants which results
+	in the worse mutation test suite.
+	
+6. Test case redundancy is when a test case does not add any new insight into the
+	test suite. This could happen when a test case executes the same lines and
+	branches as existing tests without improving the mutant detection rate or
+	coverage. Given that definition there are likely test cases present in my
+	testing suite that are redundant. Given the my definition and the
+	likelyhood that redundant test cases are present, I would remove them from
+	my testing suite. They are not adding any new information to the results of
+	the testing, and they are increasing the time it takes to execute the
+	tests. In the favor of optimality, I would remove them in this case.

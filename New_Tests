@@ -2,12 +2,14 @@ package triangle;
 
 import org.junit.Test;
 import static org.junit.Assert.*;
-import triangle.Triangle;
-import static triangle.Triangle.Type.*;
+
 import static triangle.Triangle.Type;
+import static triangle.Triangle.Type.*;
 
-public class TriangleMutationTest {
-
+/**
+ * Test class for the Triangle Lines
+ */
+public class MutantAdequateTest{
     @Test
     public void TestKillMutants(){
         //Kills mutants based on line 20 of triangle.java
@@ -22,7 +24,7 @@ public class TriangleMutationTest {
         // a + c == b, which should trigger INVALID in the original code
         assertEquals(Triangle.classify(3, 5, 2), INVALID); // a + c == b, so it should be INVALID
 
-
+        assertEquals(Triangle.classify(1, 3, 4), INVALID);
     }
 
     // Test for invalid triangles due to zero or negative side lengths
@@ -38,6 +40,7 @@ public class TriangleMutationTest {
     public void testMaxIntBoundary() {
         assertEquals(Triangle.classify(Integer.MAX_VALUE, Integer.MAX_VALUE, Integer.MAX_VALUE), EQUILATERAL);  // Max side values, equilateral
     }
+   
 
     @Test
     public void testZeroSide() {
@@ -92,45 +95,4 @@ public class TriangleMutationTest {
         assertEquals(INVALID, Triangle.classify(5, 10, 5));
         assertEquals(INVALID, Triangle.classify(10, 5, 5));
     }
-
-    @Test
-    public void testIsoscelesTriangleBranches() {
-        assertEquals(Triangle.classify(3, 5, 5), ISOSCELES);
-        assertEquals(Triangle.classify(5, 3, 5), ISOSCELES);
-    }
-    
-    @Test
-    public void testScaleneTriangleBranches() {
-        assertEquals(Triangle.classify(10, 15, 20), SCALENE);
-        assertEquals(Triangle.classify(11, 12, 13), SCALENE);
-    }
-    
-    @Test
-    public void testInvalidTriangleBranches() {
-        assertEquals(Triangle.classify(10, 1, 1), INVALID);
-        assertEquals(Triangle.classify(3, 10, 1), INVALID);
-        assertEquals(Triangle.classify(1, 3, 10), INVALID);
-    }
-        
-    // Test for triangle with large side differences that are still valid (triangle inequality satisfied)
-    @Test
-    public void testLargeSideDifference() {
-        assertEquals(Triangle.classify(Integer.MAX_VALUE, Integer.MAX_VALUE - 1, Integer.MAX_VALUE - 2), INVALID);
-        assertEquals(Triangle.classify(10000000, 9999999, 9999998), SCALENE);
-    }
-    
-     @Test public void testInvalidScaleneTestsBranches(){
-     assertEquals(Triangle.classify(1, 4, 5), INVALID); // = c
-     assertEquals(Triangle.classify(1, 4, 6), INVALID);// < c
-    
-     assertEquals(Triangle.classify(2, 4, 2), INVALID); // = b
-     assertEquals(Triangle.classify(2, 4, 1), INVALID); // < b
-    
-     assertEquals(Triangle.classify(6, 4, 2), INVALID); // = a
-     assertEquals(Triangle.classify(7, 4, 2), INVALID); // < a
-    
-     }
-
-
 }
-

@@ -42,7 +42,7 @@ Homework #4
 	execution.
 
 5. When commenting out all of the assertions, I discovered that line and branch 
-	coverage remained the same while, mutant detection and killing rates
+	coverage remained similar, while mutant detection and killing rates
 	decreased significantly. This is because each line and branch are still
 	executed, there is just no error thrown to catch the mutants which results
 	in the worse mutation test suite.

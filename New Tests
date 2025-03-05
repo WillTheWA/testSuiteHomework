@@ -1,0 +1,165 @@
+// Aidans
+package triangle;
+
+import org.junit.Test;
+import static org.junit.Assert.*;
+
+import static triangle.Triangle.Type;
+import static triangle.Triangle.Type.*;
+
+/**
+ * Test class for the Triangle Lines
+ */
+public class StatementCoverageTest {
+   @Test
+   public void testEquilateralTriangle() {
+       assertEquals(Triangle.classify(5, 5, 5), EQUILATERAL);
+   }
+
+   @Test
+   public void testIsoscelesTriangle() {
+       assertEquals(Triangle.classify(5, 5, 3), ISOSCELES);
+   }
+
+   @Test
+   public void testScaleneTriangle() {
+       assertEquals(Triangle.classify(4, 5, 6), SCALENE);
+   }
+
+   @Test
+   public void testInvalidTriangle() {
+       assertEquals(Triangle.classify(1, 1, 3), INVALID);
+   }
+
+   @Test
+   public void testNegativeAndZeroSides() {
+        assertEquals(Triangle.classify(-5, -5, -5), INVALID);  // Negative sides
+        assertEquals(Triangle.classify(0,0,0), INVALID); //All 0 sides
+   }
+
+   @Test
+   public void TestTriangleClass(){
+       //Make sure that the triangle is initialized correctly
+       Triangle triangle = new Triangle();
+       assertNotNull(triangle);
+   }
+
+   @Test
+   public void TestEnumType(){
+       //Make sure the types are mapped to the correct enum types
+       assertEquals(Type.INVALID, Type.valueOf("INVALID"));
+       assertEquals(Type.SCALENE, Type.valueOf("SCALENE"));
+       assertEquals(Type.EQUILATERAL, Type.valueOf("EQUILATERAL"));
+       assertEquals(Type.ISOSCELES, Type.valueOf("ISOSCELES"));
+   }
+}
+
+public class ConditionCoverageTest{
+    @Test
+    public void testIsoscelesTriangleBranches() {
+        assertEquals(Triangle.classify(3, 5, 5), ISOSCELES);
+        assertEquals(Triangle.classify(5, 3, 5), ISOSCELES);
+    }
+    
+    @Test
+    public void testScaleneTriangleBranches() {
+        assertEquals(Triangle.classify(10, 15, 20), SCALENE);
+        assertEquals(Triangle.classify(11, 12, 13), SCALENE);
+    }
+    
+    @Test
+    public void testInvalidTriangleBranches() {
+        assertEquals(Triangle.classify(10, 1, 1), INVALID);
+        assertEquals(Triangle.classify(3, 10, 1), INVALID);
+        assertEquals(Triangle.classify(1, 3, 10), INVALID);
+    }
+    
+    // Additional tests to ensure mutants are killed and edge cases are covered with integer side lengths
+    
+    // Test for triangle with large side differences that are still valid (triangle inequality satisfied)
+    @Test
+    public void testLargeSideDifference() {
+        assertEquals(Triangle.classify(Integer.MAX_VALUE, Integer.MAX_VALUE - 1, Integer.MAX_VALUE - 2), INVALID);
+        assertEquals(Triangle.classify(10000000, 9999999, 9999998), SCALENE);
+    }
+    
+    // Test for negative and zero side lengths in various combinations
+    @Test
+    public void testNegativeAndZeroSidesBranches() {
+         assertEquals(Triangle.classify(-5, 5, 5), INVALID);  // Negative side
+         assertEquals(Triangle.classify(5, -5, 5), INVALID);  // Negative side
+         assertEquals(Triangle.classify(5, 5, -5), INVALID);  // Negative side
+         assertEquals(Triangle.classify(0, 5, 5), INVALID);  // Zero side
+         assertEquals(Triangle.classify(5, 0, 5), INVALID);  // Zero side
+         assertEquals(Triangle.classify(5, 5, 0), INVALID);  // Zero sidetEquals(Triangle.classify(-5, 0, 0), INVALID);
+    }
+    
+    // Test for very large triangle inequality boundary case
+    @Test
+    public void testLargeTriangleBoundary() {
+        assertEquals(Triangle.classify(10000000, 10000000, 9999999), ISOSCELES);
+    }
+    
+    // Test for edge cases where sides are very close to zero
+    @Test
+    public void testEdgeCasesWithSidesCloseToZero() {
+        assertEquals(Triangle.classify(1, 1, 2), INVALID);
+        assertEquals(Triangle.classify(2, 1, 1), INVALID);
+        assertEquals(Triangle.classify(1, 2, 1), INVALID);
+    }
+    
+    // Test for large valid scalene triangle with very large side lengths
+    @Test
+    public void testLargeValidScaleneTriangle() {
+        assertEquals(Triangle.classify(1000000000, 1000000001, 1000000002), SCALENE);
+    }
+    
+    
+     // Test for triangle inequality boundary with large numbers
+     @Test
+     public void testTriangleInequalityLargeValues() {
+         assertEquals(Triangle.classify(1000000000, 1000000000, 999999999), ISOSCELES);  // Large valid triangle
+         assertEquals(Triangle.classify(1000000000, 1000000000, 2000000000), INVALID);  // Invalid triangle inequality
+     }
+       
+     @Test public void testInvalidScaleneTestsBranches(){
+     assertEquals(Triangle.classify(1, 4, 5), INVALID); // = c
+     assertEquals(Triangle.classify(1, 4, 6), INVALID);// < c
+    
+     assertEquals(Triangle.classify(2, 4, 2), INVALID); // = b
+     assertEquals(Triangle.classify(2, 4, 1), INVALID); // < b
+    
+     assertEquals(Triangle.classify(6, 4, 2), INVALID); // = a
+     assertEquals(Triangle.classify(7, 4, 2), INVALID); // < a
+    
+     }
+ public void TestKillMutants(){
+        //Kills mutants based on line 20 of triangle.java
+        assertEquals(Triangle.classify(1, 1, 0), INVALID);
+        assertEquals(Triangle.classify(0, 1, 1), INVALID);
+        assertEquals(Triangle.classify(1, 0, 1), INVALID);
+        assertEquals(Triangle.classify(1, 2, 2), ISOSCELES); // Valid triangle
+        assertEquals(Triangle.classify(2, 1, 2), ISOSCELES); // Valid triangle
+        assertEquals(Triangle.classify(2, 2, 1), ISOSCELES); // Valid triangle
+        assertEquals(Triangle.classify(2, 3, 4), SCALENE); // Valid scalene triangle
+        assertEquals(Triangle.classify(1, 2, 3), INVALID); // This should be invalid (triangle inequality)
+        // a + c == b, which should trigger INVALID in the original code
+        assertEquals(Triangle.classify(3, 5, 2), INVALID); // a + c == b, so it should be INVALID
+
+
+    }
+
+    // Test for invalid triangles due to zero or negative side lengths
+    @Test
+    public void testNegativeSidesWithViolation() {
+        assertEquals(Triangle.classify(-1, 1, 3), INVALID);
+        assertEquals(Triangle.classify(1, -1, 3), INVALID);
+        assertEquals(Triangle.classify(1, 1, -3), INVALID);
+    }
+
+    // Test for edge case where side lengths are max int values (boundary test for max input values)
+    @Test
+    public void testMaxIntBoundary() {
+        assertEquals(Triangle.classify(Integer.MAX_VALUE, Integer.MAX_VALUE, Integer.MAX_VALUE), EQUILATERAL);  // Max side values, equilateral
+    }
+}

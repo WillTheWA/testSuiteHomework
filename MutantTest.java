@@ -6,8 +6,12 @@ import static org.junit.Assert.*;
 import static triangle.Triangle.Type;
 import static triangle.Triangle.Type.*;
 
+/**
+
+ * Test class for the Triangle implementation.
+ */
 public class MutantTest {
-    // Other Tests from coverages
+    // Other Tests From Coverages
     @Test
     public void test1() {
         assertEquals(Type.EQUILATERAL, Triangle.classify(10, 10, 10));
@@ -58,5 +62,13 @@ public class MutantTest {
         // Aidans Tests
         assertEquals(Type.INVALID, Triangle.classify(Integer.MAX_VALUE, Integer.MAX_VALUE - 1, Integer.MAX_VALUE - 2));
         assertEquals(Type.SCALENE, Triangle.classify(10000000, 9999999, 9999998));
+        
+        // Nadirs Tests
+        assertEquals(Type.INVALID, Triangle.classify(Integer.MAX_VALUE, 5, 5));
+        assertEquals(Type.INVALID, Triangle.classify(5, Integer.MAX_VALUE, 5));
+        assertEquals(Type.INVALID, Triangle.classify(5, 5, Integer.MAX_VALUE));
+        
+        // Chat
+        assertEquals(Triangle.Type.INVALID, Triangle.classify(2, 2, 5));
     }
 }

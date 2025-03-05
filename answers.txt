@@ -22,38 +22,24 @@ Homework #4
 4. I believe I was able to detect all 150 mutants, however I was unable to kill
 	all of them with test cases. Given the wording of this question I will
 	assume it is referring to remaining living mutations instead of detecting.
-	Live mutations:
-		11: Unable to find a set of numbers that resulted in 
-		(a <= 0 != b <= 0 || c <= 0) acting differently while giving a 
-		different result than INVALID.
+	I was able to kill 147 of them. The unkilled ones are listed below.
+
+	11: Unable to find a set of numbers that resulted in 
+	(a <= 0 != b <= 0 || c <= 0) acting differently while giving a 
+	different result than INVALID.
 		
-		59: Unable to test trian <= 0. No way to get trian negative. 
-		Otherwise trian = 0, resulted in equivalent execution.
+	59: Unable to test trian <= 0. No way to get trian negative. 
+	Otherwise trian = 0, resulted in equivalent execution.
 		
-		76: Unable to generate test case that resulted in a not INVALID
-		result given the mutation.
+	76: Unable to generate test case that resulted in a not INVALID
+	result given the mutation.
 		
-		80: Unable to generate test case that resulted in a non-INVALID 
-		result with the modulo operator.
+	101: Couldn't catch trian <= 0 late in the program. Trian cannot
+	be negative and trian == 0 was caught earlier in the program.
 		
-		87: Unable to generate test case that resulted in a non-INVALID
-		result while using distinct numbers.
-		
-		101: Couldn't catch trian <= 0 late in the program. Trian cannot
-		be negative and trian == 0 was caught earlier in the program.
-		
-		111: Unable to generate a test case catch this mutation. 
-		Unable to evaluate (trian == 1 == a + b > c) in java.
-		
-		128: Unable to generate a test case catch this mutation. 
-		Unable to evaluate (trian == 2 == a + c > b) in java.
-		
-		136: Unable to generate test case to catch this mutation. Trian 
-		> 3 was caught earlier and trian == 3 performs equivalent 
-		execution.
-		
-		145: Unable to generate a test case catch this mutation. 
-		Unable to evaluate (trian == 3 == b + c > a) in java.
+	136: Unable to generate test case to catch this mutation. Trian 
+	> 3 was caught earlier and trian == 3 performs equivalent 
+	execution.
 
 5. When commenting out all of the assertions, I discovered that line and branch 
 	coverage remained the same while, mutant detection and killing rates
